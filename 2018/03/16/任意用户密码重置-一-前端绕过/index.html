@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://i.imgur.com/TCcFmnw.png">
 <meta property="og:image" content="https://i.imgur.com/JNuWXee.png">
 <meta property="og:image" content="https://i.imgur.com/90vC19Q.png">
-<meta property="og:updated_time" content="2018-03-16T12:06:14.978Z">
+<meta property="og:updated_time" content="2018-03-16T12:09:53.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="任意用户密码重置(一):前端绕过">
 <meta name="twitter:description" content="在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。 案例：对返回的包进行修改绕过验证密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码开启浏览器的网络监听，观察Response也就是说当Status为1的时候，是不让修改密码的。我习惯性的vi">
@@ -161,7 +161,7 @@
   <div class="article-content">
     
       <p>在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。</p>
-<h1 id="案例：对返回的包进行修改绕过验证"><a href="#案例：对返回的包进行修改绕过验证" class="headerlink" title="案例：对返回的包进行修改绕过验证"></a>案例：对返回的包进行修改绕过验证</h1><p>密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码<br><img src="https://i.imgur.com/U07Xx1K.png" alt=""><br>开启浏览器的网络监听，观察Response<br><img src="https://i.imgur.com/PVL6lbU.png" alt=""><br>也就是说当Status为1的时候，是不让修改密码的。我习惯性的view code，大概是这样说的，如果status等于0的时候跳转到第二步，不等于0的时候，提示验证码不正确。这明显是一个前端验证，只要我们绕过这个验证，是可以成功修改密码的。<br>修改response中的值为0，放行包<br><img src="https://i.imgur.com/TCcFmnw.png" alt=""><br><img src="https://i.imgur.com/JNuWXee.png" alt=""><br><img src="https://i.imgur.com/90vC19Q.png" alt=""></p>
+<h1 id="案例：对返回的包进行修改绕过验证"><a href="#案例：对返回的包进行修改绕过验证" class="headerlink" title="案例：对返回的包进行修改绕过验证"></a>案例：对返回的包进行修改绕过验证</h1><p>密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码<br><img src="https://i.imgur.com/U07Xx1K.png" alt=""><br>开启浏览器的网络监听，观察Response<br><img src="https://i.imgur.com/PVL6lbU.png" alt=""><br>也就是说当Status为1的时候，是不让修改密码的。我习惯性的view code，大概是这样说的，如果status等于0的时候跳转到第二步，不等于0的时候，提示验证码不正确。这明显是一个前端验证，只要我们绕过这个验证，是可以成功修改密码的。<br>修改response中的值为0<br><img src="https://i.imgur.com/TCcFmnw.png" alt=""><br>放行包后,便可修改密码<br><img src="https://i.imgur.com/JNuWXee.png" alt=""><br><img src="https://i.imgur.com/90vC19Q.png" alt=""></p>
 <hr>
 
     
