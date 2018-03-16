@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 
-  <html class="light page-title">
+  <html class="light page-post">
 
 
 <head>
   <meta charset="utf-8">
   
-  <title>用生命在折腾 | p0c HomePage</title>
+  <title>任意用户密码重置(一):前端绕过 | p0c HomePage</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,16 +15,22 @@
     <meta name="keywords" content="" />
   
 
-  <meta name="description" content="一朝入梦，终生不醒没有Blog总感觉少点什么。总想写点什么，不知道往哪里写，从哪写，写什么既然折腾了，就好好折腾一下 就酱~~">
+  <meta name="description" content="在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。 案例：对返回的包进行修改绕过验证密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码开启浏览器的网络监听，观察Response也就是说当Status为1的时候，是不让修改密码的。我习惯性的vi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用生命在折腾">
-<meta property="og:url" content="https://www.06m.me/2018/03/16/用生命在折腾/index.html">
+<meta property="og:title" content="任意用户密码重置(一):前端绕过">
+<meta property="og:url" content="https://www.06m.me/2018/03/16/任意用户密码重置-一-前端绕过/index.html">
 <meta property="og:site_name" content="p0c HomePage">
-<meta property="og:description" content="一朝入梦，终生不醒没有Blog总感觉少点什么。总想写点什么，不知道往哪里写，从哪写，写什么既然折腾了，就好好折腾一下 就酱~~">
-<meta property="og:updated_time" content="2018-03-16T10:16:14.495Z">
+<meta property="og:description" content="在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。 案例：对返回的包进行修改绕过验证密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码开启浏览器的网络监听，观察Response也就是说当Status为1的时候，是不让修改密码的。我习惯性的vi">
+<meta property="og:image" content="https://i.imgur.com/U07Xx1K.png">
+<meta property="og:image" content="https://i.imgur.com/PVL6lbU.png">
+<meta property="og:image" content="https://i.imgur.com/TCcFmnw.png">
+<meta property="og:image" content="https://i.imgur.com/JNuWXee.png">
+<meta property="og:image" content="https://i.imgur.com/90vC19Q.png">
+<meta property="og:updated_time" content="2018-03-16T12:06:14.978Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用生命在折腾">
-<meta name="twitter:description" content="一朝入梦，终生不醒没有Blog总感觉少点什么。总想写点什么，不知道往哪里写，从哪写，写什么既然折腾了，就好好折腾一下 就酱~~">
+<meta name="twitter:title" content="任意用户密码重置(一):前端绕过">
+<meta name="twitter:description" content="在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。 案例：对返回的包进行修改绕过验证密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码开启浏览器的网络监听，观察Response也就是说当Status为1的时候，是不让修改密码的。我习惯性的vi">
+<meta name="twitter:image" content="https://i.imgur.com/U07Xx1K.png">
 
   
 
@@ -114,9 +120,9 @@
 <!--%- partial('_partial/component/toc') %-->
 
 <div class="content content-post CENTER">
-   <article id="title-用生命在折腾" class="article article-type-title" itemprop="blogPost">
+   <article id="post-任意用户密码重置-一-前端绕过" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">用生命在折腾</h1>
+    <h1 class="post-title">任意用户密码重置(一):前端绕过</h1>
 
     <div class="article-meta">
       <span>
@@ -132,17 +138,12 @@
       
 
       
-  <span class="article-category">
-    <i class="icon-list"></i>
-    <a class="article-category-link" href="/categories/生活随笔/">生活随笔</a>
-  </span>
-
 
 
       
         <span>
           <i class="icon-comment"></i>
-          <a href="https://www.06m.me/2018/03/16/用生命在折腾/#disqus_thread"></a>
+          <a href="https://www.06m.me/2018/03/16/任意用户密码重置-一-前端绕过/#disqus_thread"></a>
         </span>
       
 
@@ -159,7 +160,9 @@
 
   <div class="article-content">
     
-      <p>一朝入梦，终生不醒<br>没有Blog总感觉少点什么。<br>总想写点什么，不知道往哪里写，从哪写，写什么<br>既然折腾了，就好好折腾一下 就酱~~</p>
+      <p>在逻辑漏洞中，任意用户密码重置漏洞最为常见，尤其是在密码找回界面是才是密码重置的重灾区。形成漏洞的原因往往是开发人员疏忽大意，只在前端对服务器返回的值作为更改密码的校验，没有在后端做二次校验。</p>
+<h1 id="案例：对返回的包进行修改绕过验证"><a href="#案例：对返回的包进行修改绕过验证" class="headerlink" title="案例：对返回的包进行修改绕过验证"></a>案例：对返回的包进行修改绕过验证</h1><p>密码重置页面，输入要重置的账号（手机号码），获取验证码，输入验证码<br><img src="https://i.imgur.com/U07Xx1K.png" alt=""><br>开启浏览器的网络监听，观察Response<br><img src="https://i.imgur.com/PVL6lbU.png" alt=""><br>也就是说当Status为1的时候，是不让修改密码的。我习惯性的view code，大概是这样说的，如果status等于0的时候跳转到第二步，不等于0的时候，提示验证码不正确。这明显是一个前端验证，只要我们绕过这个验证，是可以成功修改密码的。<br>修改response中的值为0，放行包<br><img src="https://i.imgur.com/TCcFmnw.png" alt=""><br><img src="https://i.imgur.com/JNuWXee.png" alt=""><br><img src="https://i.imgur.com/90vC19Q.png" alt=""></p>
+<hr>
 
     
   </div>
@@ -197,10 +200,10 @@
 
    
   <div class="box-prev-next clearfix">
-    <a class="hide pull-left" href="/">
+    <a class="show pull-left" href="/2018/03/16/GITPAGES-HTTPS-CONFIG/">
         <i class="icon icon-angle-left"></i>
     </a>
-    <a class="show pull-right" href="/2018/03/16/GITPAGES-HTTPS-CONFIG/">
+    <a class="hide pull-right" href="/">
         <i class="icon icon-angle-right"></i>
     </a>
   </div>
@@ -270,7 +273,7 @@
 
 
   
-      <!--div class="fexo-comments comments-title"-->
+      <!--div class="fexo-comments comments-post"-->
   <div class="fexo-comments comments-post">
     
   <section class="disqus-comments">
@@ -282,7 +285,7 @@
   <script>
     var disqus_shortname = '6x0cm';
     
-    var disqus_url = 'https://www.06m.me/2018/03/16/用生命在折腾/';
+    var disqus_url = 'https://www.06m.me/2018/03/16/任意用户密码重置-一-前端绕过/';
     
     (function(){
       var dsq = document.createElement('script');
